@@ -1,0 +1,15 @@
+.max-vh {
+    height: 100vh;
+}
+
+.padding-top {
+    padding-top: 30vh;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+.btn-no-wrap {
+    white-space: nowrap; /* Prevents text from wrapping */
+}
