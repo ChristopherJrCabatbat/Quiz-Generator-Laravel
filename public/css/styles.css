@@ -13,3 +13,33 @@ h1 {
 .btn-no-wrap {
     white-space: nowrap; /* Prevents text from wrapping */
 }
+
+/* Ensure the container occupies full width and handles sliding */
+.form-sliding-container {
+    display: flex;
+    transition: transform 0.6s ease-in-out;
+    width: 100%; /* Start with 100%, will expand dynamically */
+}
+
+.form-section {
+    width: 100%; /* Take full viewport width */
+    padding: 20px;
+}
+
+.form-container {
+    position: relative;
+    width: 100%; /* Full width of the container */
+    overflow: hidden;
+}
+
+.slide-left {
+    transform: translateX(-100%); /* Slide full width left */
+}
+
+.options-container input {
+    margin-bottom: 10px;
+}
+
+.hidden {
+    display: none;
+}
