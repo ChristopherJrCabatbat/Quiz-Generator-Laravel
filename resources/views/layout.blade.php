@@ -22,9 +22,9 @@
     <header></header>
 
     <main>
-        <div class="container padding-top d-flex flex-column gap-3 align-items-center max-vh">
+        {{-- <div class="container padding-top d-flex flex-column gap-3 align-items-center max-vh"> --}}
             @yield('main-content')
-        </div>
+        {{-- </div> --}}
     </main>
 
     <footer></footer>
