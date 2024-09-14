@@ -12,7 +12,6 @@ document.getElementById("next-to-question").addEventListener("click", function (
 
     // Show the quiz question container and the back button
     quizQuestionContainer.style.display = "block";
-    // backButton.style.display = "block";
     setTimeout(() => {
         backButton.style.display = "block";
     }, 600);
@@ -66,4 +65,44 @@ document.getElementById("add-another-question").addEventListener("click", functi
 
     // Append the new question below the existing ones
     quizSection.insertAdjacentHTML("beforeend", newQuestionHTML);
+});
+
+// Handle form submission by collecting data
+document.getElementById("submit-quiz").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const title = document.getElementById("quiz_title").value;
+    const questions = [];
+
+    for (let i = 1; i <= questionCount; i++) {
+        const question = document.getElementById(`quiz_question_${i}`).value;
+        const options = [
+            document.getElementById(`option_${i}_1`).value,
+            document.getElementById(`option_${i}_2`).value,
+            document.getElementById(`option_${i}_3`).value,
+            document.getElementById(`option_${i}_4`).value
+        ];
+
+        // Get the selected correct answer ID
+        const correctAnswerId = document.getElementById(`correct_answer_${i}`).value;
+
+        // Extract the index from the correctAnswerId (e.g., "option_1_1" -> 1)
+        const correctAnswerIndex = parseInt(correctAnswerId.split('_')[2]) - 1;
+
+        // Use the index to get the correct answer's text
+        const correctAnswerText = options[correctAnswerIndex];
+
+        questions.push({
+            question: question,
+            options: options,
+            correct_answer: correctAnswerText // Store the correct answer's text
+        });
+    }
+
+    // Populate hidden inputs with collected data
+    document.getElementById("quiz_title_input").value = title;
+    document.getElementById("questions_input").value = JSON.stringify(questions);
+
+    // Submit the form
+    document.querySelector('form').submit();
 });

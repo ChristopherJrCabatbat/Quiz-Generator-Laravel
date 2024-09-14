@@ -3,15 +3,29 @@
 @section('title', 'Take Quiz')
 
 @section('styles-links')
+    <style>
+        .padding-top {
+            padding-top: 10vh;
+        }
+        .quiz-btn {
+            padding: 1rem 2rem;
+            font-size: 1.5rem;
+        }
+    </style>
 @endsection
 
 @section('main-content')
-    <div class="header">
-        <h1 class="">Quiz Generator</h1>
-    </div>
-    <div class="d-flex justify-content-center gap-3">
-        <a href="{{ route('takeQuiz') }}" class="btn btn-primary px-5 btn-lg btn-no-wrap">Take Quiz</a>
-        <a href="{{ route('createQuiz') }}" class="btn btn-success px-5 btn-lg btn-no-wrap">Create Quiz</a>
+    <div class="container padding-top text-center">
+        <div class="header mb-4">
+            <h1 class="">Choose Quiz to Take</h1>
+        </div>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            @foreach($quizzes as $quiz)
+                <a href="{{ route('quiz.take', $quiz->id) }}" class="btn btn-primary quiz-btn">
+                    {{ $quiz->title }}
+                </a>
+            @endforeach
+        </div>
     </div>
 @endsection
 
