@@ -11,9 +11,6 @@ h1 {
 }
 
 .form-container {
-    /* position: relative;
-    width: 100%;
-    height: 100vh; */
     overflow: hidden;
 }
 
@@ -29,9 +26,7 @@ h1 {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    /* height: 100vh; */
     min-width: 100vw;
-    /* overflow: hidden; */
     overflow-x: hidden;
 }
 
@@ -43,14 +38,11 @@ h1 {
     min-width: 93vw !important;
 }
 
-/* Enable scrolling within the quiz-question-section when questions overflow */
 .quiz-questions-container {
-    height: 70vh; /* Takes up 70% of the view height */
-    overflow-y: auto; /* Scrollable content */
-    /* padding-right: 10px; */
+    height: 70vh;
+    overflow-y: auto; 
 }
 
-/* Buttons section is outside of quiz-question-section */
 .form-buttons {
     position: relative;
     margin-top: auto;
@@ -61,10 +53,22 @@ h1 {
 }
 
 
-/* Ensure the back button stays fixed at the top-left corner */
 #back-to-title {
     position: fixed;
     top: 4vh;
     left: 5vw;
-    z-index: 1000; /* Ensure it stays above other elements */
+    z-index: 1000;
+}
+
+.question-number {
+    margin-left: -23px;
+    width: 52%;
+}
+
+#question-section {
+    padding: .5rem 1.5rem;
+}
+
+.hr {
+    width: 80%;
 }

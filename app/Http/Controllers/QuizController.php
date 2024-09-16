@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Quiz;
+use Illuminate\Support\Facades\Log;
 
 class QuizController extends Controller
 {
@@ -68,10 +69,34 @@ class QuizController extends Controller
         return view('createQuiz');
     }
 
+    // public function store(Request $request)
+    // {
+    //     // Decode the JSON data from the request
+    //     $questions = json_decode($request->input('questions'), true);
+
+    //     // Create a new quiz
+    //     $quiz = Quiz::create([
+    //         'title' => $request->input('title'),
+    //         'questions' => $questions, // Storing the questions array as JSON in the database
+    //     ]);
+
+    //     // Redirect or return a response
+    //     return redirect('/')->with('success', 'Quiz created successfully!');
+    // }
     public function store(Request $request)
     {
         // Decode the JSON data from the request
         $questions = json_decode($request->input('questions'), true);
+
+        // Debug: Check if $questions is null
+        if (is_null($questions)) {
+            return redirect()->back()->with('error', 'Questions data is missing or invalid.');
+        }
+
+        // Debug: Log the input to check what is being received
+        Log::info('Quiz title: ' . $request->input('title'));
+        Log::info('Questions input: ' . $request->input('questions'));
+        Log::info('Decoded questions array: ', $questions);
 
         // Create a new quiz
         $quiz = Quiz::create([

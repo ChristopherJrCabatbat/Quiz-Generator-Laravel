@@ -2,9 +2,20 @@ let questionCount = 1;
 
 // Handle sliding to the next step (showing the first question)
 document.getElementById("next-to-question").addEventListener("click", function () {
+    const quizTitle = document.getElementById("quiz_title");
+
+    // Check if the title is empty
+    if (!quizTitle.value.trim()) {
+        alert("Please enter a quiz title.");
+        return; // Stop further execution
+    }
+
     const slidingContainer = document.getElementById("sliding-container");
     const quizQuestionContainer = document.getElementById("quiz-question-container");
     const backButton = document.getElementById("back-to-title");
+
+    // Set the title in the display element
+    document.getElementById("display-quiz-title").textContent = quizTitle.value;
 
     // Slide to the quiz question section
     slidingContainer.style.transform = `translateX(-100%)`;
@@ -37,34 +48,39 @@ document.getElementById("back-to-title").addEventListener("click", function () {
 document.getElementById("add-another-question").addEventListener("click", function () {
     questionCount++; // Increment question count
 
-    const quizSection = document.getElementById("quiz-question-section-1");
+    const questionsSection = document.getElementById("questions-section");
 
-    // Create new question HTML and append to the quiz section
+    // Create new question HTML with numbering on the left and an <hr> line
     const newQuestionHTML = `
-        <div class="mb-3 mt-4 w-50 text-center">
-            <label for="quiz_question_${questionCount}" class="form-label fs-3 mb-3">Question ${questionCount}</label>
-            <input type="text" class="form-control mx-auto" id="quiz_question_${questionCount}" placeholder="Enter your question">
-        </div>
-        <div class="options-container w-50 text-center">
-            <label for="quiz_options_${questionCount}" class="form-label fs-3 mb-3">Options</label>
-            <input type="text" class="form-control mb-2" id="option_${questionCount}_1" placeholder="Option 1">
-            <input type="text" class="form-control mb-2" id="option_${questionCount}_2" placeholder="Option 2">
-            <input type="text" class="form-control mb-2" id="option_${questionCount}_3" placeholder="Option 3">
-            <input type="text" class="form-control mb-2" id="option_${questionCount}_4" placeholder="Option 4">
-        </div>
-        <div class="w-50 text-center mb-3">
-            <label for="correct_answer_${questionCount}" class="form-label fs-3 mb-3">Correct Answer</label>
-            <select class="form-control" id="correct_answer_${questionCount}">
-                <option value="option_${questionCount}_1">Option 1</option>
-                <option value="option_${questionCount}_2">Option 2</option>
-                <option value="option_${questionCount}_3">Option 3</option>
-                <option value="option_${questionCount}_4">Option 4</option>
-            </select>
+        <div class="form-section qq-vw mt-4">
+            <div class="d-flex align-items-center mb-3 question-number">
+                <label class="form-label fs-5 me-2">${questionCount}.</label>
+                <input type="text" class="form-control" id="quiz_question_${questionCount}" placeholder="Enter your question" required>
+            </div>
+            <div class="options-container w-50 text-center">
+                <input type="text" class="form-control mb-2" id="option_${questionCount}_1" placeholder="Option 1" required>
+                <input type="text" class="form-control mb-2" id="option_${questionCount}_2" placeholder="Option 2" required>
+                <input type="text" class="form-control mb-2" id="option_${questionCount}_3" placeholder="Option 3" required>
+                <input type="text" class="form-control mb-2" id="option_${questionCount}_4" placeholder="Option 4" required>
+            </div>
+            <div class="w-50 text-center mb-3">
+                <label for="correct_answer_${questionCount}" class="form-label fs-4 mb-3">Correct Answer</label>
+                <select class="form-control" id="correct_answer_${questionCount}" required>
+                    <option value="option_${questionCount}_1">Option 1</option>
+                    <option value="option_${questionCount}_2">Option 2</option>
+                    <option value="option_${questionCount}_3">Option 3</option>
+                    <option value="option_${questionCount}_4">Option 4</option>
+                </select>
+            </div>
+            <!-- Separator Line -->
+            <div class="hr">
+                <hr class="mt-4">
+            </div>
         </div>
     `;
 
-    // Append the new question below the existing ones
-    quizSection.insertAdjacentHTML("beforeend", newQuestionHTML);
+    // Insert the new question above the buttons section
+    questionsSection.insertAdjacentHTML("beforeend", newQuestionHTML);
 });
 
 // Handle form submission by collecting data
@@ -98,6 +114,9 @@ document.getElementById("submit-quiz").addEventListener("click", function (e) {
             correct_answer: correctAnswerText // Store the correct answer's text
         });
     }
+
+    // Debug: Log the collected data before form submission
+    console.log('Collected Questions:', questions);
 
     // Populate hidden inputs with collected data
     document.getElementById("quiz_title_input").value = title;
