@@ -72,3 +72,54 @@ h1 {
 .hr {
     width: 80%;
 }
+
+/* Container for the quiz button */
+.quiz-btn-container {
+    margin: .5rem;
+}
+
+/* Button styling */
+.quiz-btns {
+    display: block; /* Make the entire element clickable */
+    padding: 15px;
+    background-color: #007bff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 200px; /* Fixed width */
+    text-align: center;
+    color: white; /* Set text color for the link */
+    text-decoration: none; /* Remove underline */
+}
+
+/* Add a separator line */
+.separator-line {
+    height: 1px;
+    background-color: white;
+    border: none;
+    margin: 10px 0 0 0;
+}
+
+/* Quiz title styling */
+.quiz_title {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Hover effects */
+.quiz-btns:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    background-color: #0056b3; /* Slightly darken on hover */
+}
+
+.quiz-btns:hover .quiz_title {
+    text-decoration: underline;
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+}

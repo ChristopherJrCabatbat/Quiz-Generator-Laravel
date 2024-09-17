@@ -109,7 +109,7 @@
                                 
                                 <!-- Conditionally show the correct answer only after submission -->
                                 @if (isset($score) && $isCorrect)
-                                    <span class="correct-answer">*check* correct answer</span>
+                                    <span class="correct-answer alert alert-success py-2 ms-3"><i class="fa-solid fa-check"></i> correct answer</span>
                                 @endif
                             </li>
                         @endforeach

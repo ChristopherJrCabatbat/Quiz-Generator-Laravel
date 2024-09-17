@@ -1,38 +1,50 @@
 let questionCount = 1;
 
 // Handle sliding to the next step (showing the first question)
-document.getElementById("next-to-question").addEventListener("click", function () {
-    const quizTitle = document.getElementById("quiz_title");
+document
+    .getElementById("next-to-question")
+    .addEventListener("click", function () {
+        const quizTitle = document.getElementById("quiz_title");
+        const homeBackButton = document.querySelector(".back-btn"); // Select the top-left back button
 
-    // Check if the title is empty
-    if (!quizTitle.value.trim()) {
-        alert("Please enter a quiz title.");
-        return; // Stop further execution
-    }
+        // Check if the title is empty
+        if (!quizTitle.value.trim()) {
+            alert("Please enter a quiz title.");
+            return; // Stop further execution
+        }
 
-    const slidingContainer = document.getElementById("sliding-container");
-    const quizQuestionContainer = document.getElementById("quiz-question-container");
-    const backButton = document.getElementById("back-to-title");
+        const slidingContainer = document.getElementById("sliding-container");
+        const quizQuestionContainer = document.getElementById(
+            "quiz-question-container"
+        );
+        const backButton = document.getElementById("back-to-title");
 
-    // Set the title in the display element
-    document.getElementById("display-quiz-title").textContent = quizTitle.value;
+        // Set the title in the display element
+        document.getElementById("display-quiz-title").textContent =
+            quizTitle.value;
 
-    // Slide to the quiz question section
-    slidingContainer.style.transform = `translateX(-100%)`;
-    slidingContainer.style.transition = "transform 0.6s ease-in-out";
+        // Slide to the quiz question section
+        slidingContainer.style.transform = `translateX(-100%)`;
+        slidingContainer.style.transition = "transform 0.6s ease-in-out";
 
-    // Show the quiz question container and the back button
-    quizQuestionContainer.style.display = "block";
-    setTimeout(() => {
-        backButton.style.display = "block";
-    }, 600);
-});
+        // Hide the top-left back button
+        homeBackButton.style.display = "none";
+
+        // Show the quiz question container and the back button
+        quizQuestionContainer.style.display = "block";
+        setTimeout(() => {
+            backButton.style.display = "block";
+        }, 600);
+    });
 
 // Handle going back to the quiz title step
 document.getElementById("back-to-title").addEventListener("click", function () {
     const slidingContainer = document.getElementById("sliding-container");
-    const quizQuestionContainer = document.getElementById("quiz-question-container");
+    const quizQuestionContainer = document.getElementById(
+        "quiz-question-container"
+    );
     const backButton = document.getElementById("back-to-title");
+    const homeBackButton = document.querySelector(".back-btn"); // Select the top-left back button
 
     // Slide back to the quiz title section
     slidingContainer.style.transform = `translateX(0)`;
@@ -40,18 +52,27 @@ document.getElementById("back-to-title").addEventListener("click", function () {
     // Delay hiding the quiz question container by 450ms and hide the back button immediately
     setTimeout(() => {
         quizQuestionContainer.style.display = "none";
+
+        // Show the top-left back button again
+        homeBackButton.style.display = "block";
     }, 450);
-    backButton.style.display = "none"; // Hide back button immediately
+    setTimeout(() => {
+        // Show the top-left back button again
+        homeBackButton.style.display = "block";
+    }, 600);    
+    backButton.style.display = "none"; // Hide 'Back to Title' button immediately
 });
 
 // Handle adding another question
-document.getElementById("add-another-question").addEventListener("click", function () {
-    questionCount++; // Increment question count
+document
+    .getElementById("add-another-question")
+    .addEventListener("click", function () {
+        questionCount++; // Increment question count
 
-    const questionsSection = document.getElementById("questions-section");
+        const questionsSection = document.getElementById("questions-section");
 
-    // Create new question HTML with numbering on the left and an <hr> line
-    const newQuestionHTML = `
+        // Create new question HTML with numbering on the left and an <hr> line
+        const newQuestionHTML = `
         <div class="form-section qq-vw mt-4">
             <div class="d-flex align-items-center mb-3 question-number">
                 <label class="form-label fs-5 me-2">${questionCount}.</label>
@@ -79,9 +100,9 @@ document.getElementById("add-another-question").addEventListener("click", functi
         </div>
     `;
 
-    // Insert the new question above the buttons section
-    questionsSection.insertAdjacentHTML("beforeend", newQuestionHTML);
-});
+        // Insert the new question above the buttons section
+        questionsSection.insertAdjacentHTML("beforeend", newQuestionHTML);
+    });
 
 // Handle form submission by collecting data
 document.getElementById("submit-quiz").addEventListener("click", function (e) {
@@ -90,20 +111,49 @@ document.getElementById("submit-quiz").addEventListener("click", function (e) {
     const title = document.getElementById("quiz_title").value;
     const questions = [];
 
+    if (!title.trim()) {
+        alert("Quiz title is required.");
+        return;
+    }
+
     for (let i = 1; i <= questionCount; i++) {
-        const question = document.getElementById(`quiz_question_${i}`).value;
+        const question = document
+            .getElementById(`quiz_question_${i}`)
+            .value.trim();
         const options = [
-            document.getElementById(`option_${i}_1`).value,
-            document.getElementById(`option_${i}_2`).value,
-            document.getElementById(`option_${i}_3`).value,
-            document.getElementById(`option_${i}_4`).value
+            document.getElementById(`option_${i}_1`).value.trim(),
+            document.getElementById(`option_${i}_2`).value.trim(),
+            document.getElementById(`option_${i}_3`).value.trim(),
+            document.getElementById(`option_${i}_4`).value.trim(),
         ];
 
+        // Validate each question and its options
+        if (!question) {
+            alert(`Please enter a question for Question ${i}.`);
+            return;
+        }
+
+        // Check for duplicate options within the same question
+        const uniqueOptions = new Set(options);
+        if (uniqueOptions.size !== options.length) {
+            alert(
+                `Options for Question ${i} must be unique. Please make sure there are no duplicate options.`
+            );
+            return;
+        }
+
+        if (options.some((option) => option === "")) {
+            alert(`All options for Question ${i} are required.`);
+            return;
+        }
+
         // Get the selected correct answer ID
-        const correctAnswerId = document.getElementById(`correct_answer_${i}`).value;
+        const correctAnswerId = document.getElementById(
+            `correct_answer_${i}`
+        ).value;
 
         // Extract the index from the correctAnswerId (e.g., "option_1_1" -> 1)
-        const correctAnswerIndex = parseInt(correctAnswerId.split('_')[2]) - 1;
+        const correctAnswerIndex = parseInt(correctAnswerId.split("_")[2]) - 1;
 
         // Use the index to get the correct answer's text
         const correctAnswerText = options[correctAnswerIndex];
@@ -111,17 +161,18 @@ document.getElementById("submit-quiz").addEventListener("click", function (e) {
         questions.push({
             question: question,
             options: options,
-            correct_answer: correctAnswerText // Store the correct answer's text
+            correct_answer: correctAnswerText, // Store the correct answer's text
         });
     }
 
     // Debug: Log the collected data before form submission
-    console.log('Collected Questions:', questions);
+    console.log("Collected Questions:", questions);
 
     // Populate hidden inputs with collected data
     document.getElementById("quiz_title_input").value = title;
-    document.getElementById("questions_input").value = JSON.stringify(questions);
+    document.getElementById("questions_input").value =
+        JSON.stringify(questions);
 
     // Submit the form
-    document.querySelector('form').submit();
+    document.querySelector("form").submit();
 });

@@ -83,6 +83,7 @@ class QuizController extends Controller
     //     // Redirect or return a response
     //     return redirect('/')->with('success', 'Quiz created successfully!');
     // }
+    
     public function store(Request $request)
     {
         // Decode the JSON data from the request
